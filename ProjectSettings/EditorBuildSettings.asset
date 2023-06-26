@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CharacterSelect.unity
     guid: 0ee9d7ade0391304187d7fa09d1bdb61
+  - enabled: 1
+    path: Assets/Scenes/Trenholme.unity
+    guid: f57c4394a42128f46b3f26a8728fac9a
   m_configObjects: {}

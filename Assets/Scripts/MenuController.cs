@@ -46,29 +46,38 @@ public class MenuController : MonoBehaviourPunCallbacks
         }
     }
 
-    
     private void Awake()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.ConnectUsingSettings();
+        }
+            
     }
 
-    
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
         Debug.Log("Connected");
     }
 
-
     public void CreateGame() 
     {
-        string randomCode = GenerateRandomCode(7);
-        PhotonNetwork.CreateRoom(randomCode, new RoomOptions() { MaxPlayers = 4 });
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            string randomCode = GenerateRandomCode(6);
+            PhotonNetwork.CreateRoom(randomCode, new RoomOptions() { MaxPlayers = 4, BroadcastPropsChangeToAll = true });
+        }
+
     }
 
     public void JoinGame()
     {
-        PhotonNetwork.JoinRoom(codeInput.text);
+       if (PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.JoinRoom(codeInput.text);
+        }
     }
 
     public override void OnJoinedRoom()
@@ -83,7 +92,7 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void QuitGame()
     {
-        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
         Debug.Log("Game quit successfully.");
         Application.Quit();
     }

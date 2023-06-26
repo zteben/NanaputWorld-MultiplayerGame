@@ -7,23 +7,46 @@ using Photon.Realtime;
 using TMPro;
 
 
-public class PlayerCard : MonoBehaviour
+public class PlayerCard : MonoBehaviourPun
 {
+    
     public TextMeshProUGUI playerName;
-    private List<Color> colorList = new List<Color>() { Color.red, Color.blue, Color.yellow, Color.green };
+    public Image playerCharacter;
+    public Sprite[] characters;
+
+    Player player;
+    
 
     public void SetPlayerInfo(Player _player, int playerNum)
     {
-        if (_player.NickName == "") 
+        player = _player;
+
+        if (player.NickName == "") 
         {
             playerName.text = "Player " + playerNum;
         }
         else 
         { 
-            playerName.text = _player.NickName; 
+            playerName.text = player.NickName; 
         }
 
-        playerName.color = colorList[playerNum - 1];
-        
+        if (PhotonNetwork.LocalPlayer == player)
+        {  
+            playerName.color = Color.yellow;
+        }
+
+        UpdateSprite();
+    }
+
+    public void UpdateSprite()
+    {
+        if (player.CustomProperties.TryGetValue("character", out object value))
+        {
+            playerCharacter.sprite = characters[(int)value];
+        }
+        else
+        {
+            playerCharacter.sprite = characters[0];
+        }
     }
 }

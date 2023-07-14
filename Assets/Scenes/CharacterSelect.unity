@@ -726,7 +726,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.495283, g: 0.66599613, b: 1, a: 1}
     m_PressedColor: {r: 0.41037738, g: 0.60691833, b: 1, a: 1}
     m_SelectedColor: {r: 0.41176474, g: 0.60784316, b: 1, a: 1}
-    m_DisabledColor: {r: 0.60784316, g: 0.7372549, b: 1, a: 0.5019608}
+    m_DisabledColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.19607843}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1881,7 +1881,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.43614277, g: 0.764151, b: 0.5480515, a: 1}
     m_PressedColor: {r: 0.36863655, g: 0.7169812, b: 0.48889843, a: 1}
     m_SelectedColor: {r: 0.43529415, g: 0.76470596, b: 0.54901963, a: 1}
-    m_DisabledColor: {r: 0.6142755, g: 0.6415094, b: 0.6233535, a: 0.33333334}
+    m_DisabledColor: {r: 0.7254902, g: 0.7254902, b: 0.7254902, a: 0.19607843}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2688,7 +2688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: {fileID: 1925757172}
-  playerList: []
   cardPrefab: {fileID: 4487781494377340889, guid: 3588c3560c1fa6448b5325811a856ef9, type: 3}
   cardParent: {fileID: 1941621860}
   lockinButton: {fileID: 357494208}

@@ -12,12 +12,12 @@ using System;
 public class SelectController : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI roomName;
-    public List<PlayerCard> cardList = new List<PlayerCard>();
     public PlayerCard cardPrefab;
     public Transform cardParent;
     public Button lockinButton;
     public GameObject grid;
     public Button startButton;
+    List<PlayerCard> cardList = new List<PlayerCard>();
 
     ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
 

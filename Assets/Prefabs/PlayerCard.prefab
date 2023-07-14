@@ -55,9 +55,9 @@ MonoBehaviour:
   playerCharacter: {fileID: 4280930586217575720}
   characters:
   - {fileID: 21300000, guid: 5c2648f0599afd94c86de26bd884cd38, type: 3}
-  - {fileID: 21300000, guid: 76e1208b172cfb34aa66c60d5359435b, type: 3}
-  - {fileID: 21300000, guid: 1b6d1aed95e7f494f819807d2a67f465, type: 3}
-  - {fileID: 21300000, guid: fd11196d7d9a88640a991b6984a238d1, type: 3}
+  - {fileID: 21300000, guid: 888b509b90c2854468175ba41e15018f, type: 3}
+  - {fileID: 21300000, guid: 36060db0ed27b854389fd6e8fae12e82, type: 3}
+  - {fileID: 21300000, guid: d679eec516f7f524bb2d76b300cb874f, type: 3}
   - {fileID: 21300000, guid: 5c2648f0599afd94c86de26bd884cd38, type: 3}
 --- !u!1 &2599786399979521414
 GameObject:

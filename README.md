@@ -1,8 +1,8 @@
-# Nanaput World - Multiplayer Fighting Game
+# Nanaput World - Multiplayer Game
 
 ## About the project
 Welcome! 😁
-This is a server-based multiplayer 2D combat game. Up to 2 players can play in a lobby until one's health reaches zero, as shown below:
+This is a 2D multiplayer combat game. Up to 4 players can select their character and fight in an arena until the last one is standing.
 <p align="center">
     <img src="gameclip.gif" width="800"/>
 </p>

@@ -4,7 +4,7 @@
 Welcome! 😁
 This is a server-based multiplayer 2D combat game. Up to 2 players can play in a lobby until one's health reaches zero, as shown below:
 <p align="center">
-    <img src="gameclip.gif" width="700"/>
+    <img src="gameclip.gif" width="800"/>
 </p>
 The objective of this project was to explore game development, and acquire experience working with a server. Moreover, we aimed to create a fun game that reminisces the superpowers we imagined we had when playing as kids 💪🦹 (in fact, the background of the game was inspired by our childhood playground).
 

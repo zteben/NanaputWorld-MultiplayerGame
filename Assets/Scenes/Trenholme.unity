@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 496355451}
   - component: {fileID: 496355452}
   - component: {fileID: 496355453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ MonoBehaviour:
   characterPrefabs:
   - {fileID: 4923159596734640180, guid: 963be731fa1bd8b4b80e17da0b6460d6, type: 3}
   - {fileID: 4923159596734640180, guid: 963be731fa1bd8b4b80e17da0b6460d6, type: 3}
-  - {fileID: 4923159596734640180, guid: 67aa4279cc739f3418c003e40465ad11, type: 3}
+  - {fileID: 5756862657211172355, guid: 67aa4279cc739f3418c003e40465ad11, type: 3}
   - {fileID: 4923159596734640180, guid: 963be731fa1bd8b4b80e17da0b6460d6, type: 3}
   spawnPoints:
   - {fileID: 1831014239}
@@ -863,7 +863,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2029235242}
   - component: {fileID: 2029235243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,7 +955,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086885540}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &2086885542
 Camera:
   m_ObjectHideFlags: 0

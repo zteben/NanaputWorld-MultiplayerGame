@@ -39,11 +39,8 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void ChangeName()
     {
-        if (nameInput.text.Length >= 1)
-        {
-            PhotonNetwork.NickName = nameInput.text;
-            Debug.Log("Player name changed.");
-        }
+        PhotonNetwork.NickName = nameInput.text;
+        Debug.Log("Player name changed.");
     }
 
     private void Awake()

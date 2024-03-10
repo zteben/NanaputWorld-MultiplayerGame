@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Nanaput : MonoBehaviour
+public class NanaputOld : MonoBehaviour
 {
     public PhotonView photonView;
     public SpriteRenderer sr;

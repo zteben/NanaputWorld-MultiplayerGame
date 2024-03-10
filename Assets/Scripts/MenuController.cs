@@ -39,8 +39,15 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void ChangeName()
     {
-        PhotonNetwork.NickName = nameInput.text;
-        Debug.Log("Player name changed.");
+        if (nameInput.text.Length <= 10)
+        {
+            PhotonNetwork.NickName = nameInput.text;
+            Debug.Log("Player name changed.");
+        }
+        else
+        {
+            Debug.Log("Player name must be less than or equal to 10 characters");
+        }
     }
 
     private void Awake()
@@ -69,6 +76,11 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     }
 
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to create room: " + message);
+    }
+
     public void JoinGame()
     {
        if (PhotonNetwork.IsConnectedAndReady)
@@ -82,9 +94,9 @@ public class MenuController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("CharacterSelect");
     }
 
-    public override void OnJoinRoomFailed(short returnCode,string message)
+    public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Room does not exist.");
+        Debug.Log("Failed to join room: " + message);
     }
 
     public void QuitGame()

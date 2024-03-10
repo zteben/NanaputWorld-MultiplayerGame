@@ -157,6 +157,7 @@ public class SelectController : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.LoadLevel("Trenholme");
     }
 }

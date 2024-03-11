@@ -150,8 +150,13 @@ MonoBehaviour:
   anim: {fileID: 4692391795888432130}
   rb: {fileID: 121064866322444469}
   cam: {fileID: 342566337173215502}
+  groundCheck: {fileID: 494654452609522650}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   moveSpeed: 200
-  jumpForce: 50
+  jumpForce: 400
+  fallMultiplier: 100
 --- !u!212 &5971879545772945768
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -237,7 +242,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 60
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 100

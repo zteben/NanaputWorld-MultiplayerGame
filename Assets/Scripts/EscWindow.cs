@@ -26,7 +26,6 @@ public class EscWindow : MonoBehaviour
     {
         window.SetActive(!window.activeSelf);
 
-        Cursor.lockState = window.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = window.activeSelf;
     }
 
@@ -34,7 +33,6 @@ public class EscWindow : MonoBehaviour
     {
         window.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 

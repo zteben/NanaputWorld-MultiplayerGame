@@ -7,9 +7,9 @@ public class Barza : Nanaput
         base.Start();
     }
 
-    protected override void FixedUpdate()
+    protected override void Update()
     {
-        base.FixedUpdate();
+        base.Update();
     }
 
     protected override void CheckInput()

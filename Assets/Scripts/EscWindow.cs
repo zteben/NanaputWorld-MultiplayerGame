@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 public class EscWindow : MonoBehaviour
 {
-    public GameObject window;
+    public GameObject optionsMenu;
+    public GameObject quitMenu;
+    public TextMeshProUGUI roomName;
+
+    private void Awake()
+    {
+        roomName.text = "Room Code: " + PhotonNetwork.CurrentRoom.Name;
+    }
 
     private void Start()
     {
@@ -24,16 +32,29 @@ public class EscWindow : MonoBehaviour
 
     private void ToggleWindow()
     {
-        window.SetActive(!window.activeSelf);
-
-        Cursor.visible = window.activeSelf;
+        if (optionsMenu.activeSelf || quitMenu.activeSelf)
+        {
+            CloseWindow();
+        }
+        else
+        {
+            OpenWindow();
+        }
     }
 
     public void CloseWindow()
     {
-        window.SetActive(false);
+        optionsMenu.SetActive(false);
+        quitMenu.SetActive(false);
 
         Cursor.visible = false;
+    }
+
+    public void OpenWindow()
+    {
+        optionsMenu.SetActive(true);
+
+        Cursor.visible = true;
     }
 
     public void QuitGame()

@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Madzoul : Nanaput
 {
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void Start()
     {
         base.Start();

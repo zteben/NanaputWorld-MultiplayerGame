@@ -15,6 +15,7 @@ public class MenuController : MonoBehaviourPunCallbacks
     public TMP_InputField codeInput;
 
     private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private bool playerIsConnected = false;
 
 
     private string GenerateRandomCode(int length)
@@ -63,12 +64,17 @@ public class MenuController : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        playerIsConnected = true;
         Debug.Log("Connected");
     }
 
     public void CreateGame() 
     {
-        if (PhotonNetwork.IsConnectedAndReady)
+        if (PhotonNetwork.IsConnectedAndReady && playerIsConnected)
         {
             string randomCode = GenerateRandomCode(6);
             PhotonNetwork.CreateRoom(randomCode, new RoomOptions() { MaxPlayers = 4, BroadcastPropsChangeToAll = true });
@@ -83,7 +89,7 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void JoinGame()
     {
-       if (PhotonNetwork.IsConnectedAndReady)
+       if (PhotonNetwork.IsConnectedAndReady && playerIsConnected)
         {
             PhotonNetwork.JoinRoom(codeInput.text);
         }

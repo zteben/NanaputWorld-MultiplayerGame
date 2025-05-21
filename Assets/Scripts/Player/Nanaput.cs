@@ -19,9 +19,14 @@ public abstract class Nanaput : MonoBehaviour
     public float moveSpeed;
     public float jumpForce;
     public float fallMultiplier;
+    public float downForceMultiplier;
+
     protected bool canJump;
     protected bool canDoubleJump;
 
+    private Vector2 moveInput;
+    private bool jumpPressed;
+    private bool downPressed;
 
     protected virtual void Awake()
     {
@@ -47,38 +52,44 @@ public abstract class Nanaput : MonoBehaviour
                 CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
                 confiner.m_BoundingShape2D = boundCollider;
             }
-                
             else
-                Debug.LogError("boundObject not found.");
+            {
+                Debug.LogError("CameraBound not found.");
+            }
         }
     }
 
     protected virtual void Update()
     {
-        if (photonView.IsMine)
-        {
-            CheckInput();
-        }
+        if (!photonView.IsMine) return;
+
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+
+        if (Input.GetButtonDown("Jump"))
+            jumpPressed = true;
+
+        downPressed = Input.GetKey(KeyCode.DownArrow);
     }
 
-    protected virtual void CheckInput()
+    protected virtual void FixedUpdate()
     {
+        if (!photonView.IsMine) return;
+
         Move();
         Jump();
+        Down();
     }
 
     protected void Move()
     {
-        float move = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+        anim.SetBool("isRunning", moveInput.x != 0);
 
-        anim.SetBool("isRunning", move != 0);
-
-        if (move < 0)
+        if (moveInput.x < 0)
         {
             photonView.RPC("FlipSR", RpcTarget.All, true);
         }
-        else if (move > 0)
+        else if (moveInput.x > 0)
         {
             photonView.RPC("FlipSR", RpcTarget.All, false);
         }
@@ -92,43 +103,59 @@ public abstract class Nanaput : MonoBehaviour
 
     protected void Jump()
     {
-        if (IsGrounded() && rb.velocity.y == 0)
+        if (IsGrounded() && Mathf.Abs(rb.velocity.y) < 0.01f)
         {
             canJump = true;
+            canDoubleJump = true;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpPressed)
         {
             if (IsGrounded() && canJump)
             {
                 canJump = false;
-                StartCoroutine(DelayDoubleJump(0.2f));
+                StartCoroutine(DelayDoubleJump(0.15f));
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
-
-            else if (canDoubleJump || canJump)
+            else if (canDoubleJump)
             {
                 canJump = false;
                 canDoubleJump = false;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
-        }
 
-        else if (rb.velocity.y < 0)
+            jumpPressed = false;
+        }
+    }
+
+    protected void Down()
+    {
+        if (!IsGrounded())
         {
-            rb.velocity -= fallMultiplier * Time.deltaTime * new Vector2(0, -Physics2D.gravity.y);
+            if (downPressed)
+            {
+                if (rb.velocity.y > 0)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (downForceMultiplier - 1);
+            }
+            else if (rb.velocity.y < 0)
+            {
+                rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1);
+            }
         }
     }
 
     protected bool IsGrounded()
     {
-        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(25f, 1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.5f, 0.2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
     }
 
     protected IEnumerator DelayDoubleJump(float delay)
     {
+        canDoubleJump = false;
         yield return new WaitForSeconds(delay);
         canDoubleJump = true;
     }
 }
-

@@ -63,8 +63,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 250
-  jumpForce: 400
-  fallMultiplier: 100
+  jumpForce: 450
+  fallMultiplier: 2
+  downForceMultiplier: 5
 --- !u!212 &4694626898105025323
 SpriteRenderer:
   m_ObjectHideFlags: 0

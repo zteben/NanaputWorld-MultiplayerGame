@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Cinemachine;
@@ -13,13 +14,18 @@ public abstract class Nanaput : MonoBehaviour
     public GameObject cam;
     private PolygonCollider2D boundCollider;
 
-    public Transform groundCheck;
+    public CapsuleCollider2D groundCheckCollider;
     public LayerMask groundLayer;
 
     public float moveSpeed;
     public float jumpForce;
     public float fallMultiplier;
     public float downForceMultiplier;
+
+    public HealthBar healthBar;
+    public float maxHealth;
+    public float currentHealth;
+
 
     protected bool canJump;
     protected bool canDoubleJump;
@@ -28,6 +34,11 @@ public abstract class Nanaput : MonoBehaviour
     private bool jumpPressed;
     private bool downPressed;
 
+    /*
+    #############################################
+    ---------------INITIALIZE--------------------
+    #############################################
+    */
     protected virtual void Awake()
     {
         canJump = false;
@@ -37,6 +48,7 @@ public abstract class Nanaput : MonoBehaviour
     protected virtual void Start()
     {
         SetCamera();
+        SetHealth();
     }
 
     protected void SetCamera()
@@ -59,6 +71,21 @@ public abstract class Nanaput : MonoBehaviour
         }
     }
 
+    protected void SetHealth()
+    {
+        if (photonView.IsMine)
+            healthBar.ChangeColor(new Color32(76, 217, 100, 255));
+
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(maxHealth);
+    }
+
+
+    /*
+    #############################################
+    --------------------CHECK--------------------
+    #############################################
+    */  
     protected virtual void Update()
     {
         if (!photonView.IsMine) return;
@@ -80,6 +107,12 @@ public abstract class Nanaput : MonoBehaviour
         Down();
     }
 
+
+    /*
+    #############################################
+    -------------HORIZONTAL MOVEMENT-------------
+    #############################################
+    */
     protected void Move()
     {
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
@@ -101,6 +134,12 @@ public abstract class Nanaput : MonoBehaviour
         sr.flipX = flip;
     }
 
+
+    /*
+    #############################################
+    --------------VERTICAL MOVEMENT--------------
+    #############################################
+    */
     protected void Jump()
     {
         if (IsGrounded() && Mathf.Abs(rb.velocity.y) < 0.01f)
@@ -136,7 +175,7 @@ public abstract class Nanaput : MonoBehaviour
             {
                 if (rb.velocity.y > 0)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                    rb.velocity = new Vector2(rb.velocity.x, -20f);
                 }
                 rb.velocity += Vector2.up * Physics2D.gravity.y * (downForceMultiplier - 1);
             }
@@ -149,7 +188,7 @@ public abstract class Nanaput : MonoBehaviour
 
     protected bool IsGrounded()
     {
-        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.5f, 0.2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        return groundCheckCollider.IsTouchingLayers(groundLayer);
     }
 
     protected IEnumerator DelayDoubleJump(float delay)

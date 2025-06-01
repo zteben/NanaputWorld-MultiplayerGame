@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
@@ -40,6 +38,8 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void ChangeName()
     {
+        if (PhotonNetwork.NickName == nameInput.text) return;
+
         if (nameInput.text.Length <= 10)
         {
             PhotonNetwork.NickName = nameInput.text;
@@ -91,7 +91,7 @@ public class MenuController : MonoBehaviourPunCallbacks
     {
        if (PhotonNetwork.IsConnectedAndReady && playerIsConnected)
         {
-            PhotonNetwork.JoinRoom(codeInput.text);
+            PhotonNetwork.JoinRoom(codeInput.text.ToUpper());
         }
     }
 

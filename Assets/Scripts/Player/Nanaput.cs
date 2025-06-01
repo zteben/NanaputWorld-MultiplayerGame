@@ -26,7 +26,6 @@ public abstract class Nanaput : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
-
     protected bool canJump;
     protected bool canDoubleJump;
 
@@ -36,7 +35,7 @@ public abstract class Nanaput : MonoBehaviour
 
     /*
     #############################################
-    ---------------INITIALIZE--------------------
+    -----------------INITIALIZE------------------
     #############################################
     */
     protected virtual void Awake()
@@ -83,13 +82,33 @@ public abstract class Nanaput : MonoBehaviour
 
     /*
     #############################################
-    --------------------CHECK--------------------
+    -------------------UPDATE--------------------
     #############################################
     */  
     protected virtual void Update()
     {
         if (!photonView.IsMine) return;
 
+        HandleMovementInput();
+        HandleAttackInput();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!photonView.IsMine) return;
+
+        ProcessMovement();
+        ProcessAttack();
+    }
+
+
+    /*
+    #############################################
+    -------------------MOVEMENT------------------
+    #############################################
+    */
+    protected void HandleMovementInput()
+    {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
 
         if (Input.GetButtonDown("Jump"))
@@ -98,21 +117,13 @@ public abstract class Nanaput : MonoBehaviour
         downPressed = Input.GetKey(KeyCode.DownArrow);
     }
 
-    protected virtual void FixedUpdate()
+    protected void ProcessMovement()
     {
-        if (!photonView.IsMine) return;
-
         Move();
         Jump();
         Down();
     }
 
-
-    /*
-    #############################################
-    -------------HORIZONTAL MOVEMENT-------------
-    #############################################
-    */
     protected void Move()
     {
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
@@ -134,12 +145,6 @@ public abstract class Nanaput : MonoBehaviour
         sr.flipX = flip;
     }
 
-
-    /*
-    #############################################
-    --------------VERTICAL MOVEMENT--------------
-    #############################################
-    */
     protected void Jump()
     {
         if (IsGrounded() && Mathf.Abs(rb.velocity.y) < 0.01f)
@@ -197,4 +202,34 @@ public abstract class Nanaput : MonoBehaviour
         yield return new WaitForSeconds(delay);
         canDoubleJump = true;
     }
+
+
+    /*
+    #############################################
+    --------------------ATTACK-------------------
+    #############################################
+    */
+    protected virtual void HandleAttackInput()
+    {
+
+    }
+
+    protected virtual void ProcessAttack()
+    {
+
+    }
+
+    [PunRPC]
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            // You can add death logic here
+            Debug.Log("A player has been eliminated.");
+        }
+    }
+
 }

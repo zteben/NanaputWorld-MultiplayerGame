@@ -86,6 +86,11 @@ public class SelectController : MonoBehaviourPunCallbacks
         }
     }
 
+    private void Start()
+    {
+        MusicManager.Instance.StopMusic();
+    }
+
     public void LeaveRoom()
     {
         playerProperties["lockedin"] = false;

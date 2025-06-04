@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,10 +14,17 @@ public class MenuController : MonoBehaviourPunCallbacks
     public TMP_InputField nameInput;
     public TMP_InputField codeInput;
 
+    public AudioMixer audioMixer;
+    public Slider musicSlider;
+
     private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private bool playerIsConnected = false;
 
-
+    /*
+    #############################################
+    -----------------PLAYER NAME-----------------
+    #############################################
+    */
     private string GenerateRandomCode(int length)
     {
         StringBuilder stringBuilder = new StringBuilder(length);
@@ -51,6 +60,51 @@ public class MenuController : MonoBehaviourPunCallbacks
         }
     }
 
+    public void SaveName()
+    {
+        PlayerPrefs.SetString("PlayerName", PhotonNetwork.NickName);
+    }
+
+    public void LoadName()
+    {
+        PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName", "");
+    }
+
+    /*
+    #############################################
+    ---------------------AUDIO-------------------
+    #############################################
+    */
+    public void SetMusicVolume(float sliderVolume)
+    {
+        float volume = Mathf.Log10(Mathf.Clamp(sliderVolume, 0.0001f, 1f)) * 20f;
+        audioMixer.SetFloat("MusicVolume", volume);
+        audioMixer.SetFloat("MusicVolume", volume);
+    }
+
+    /*
+    public void SetSFXVolume(float sliderVolume)
+    {
+        float volume = Mathf.Log10(Mathf.Clamp(sliderVolume, 0.0001f, 1f)) * 20f;
+        audioMixer.SetFloat("SFXVolume", volume);
+    }
+    */
+
+    public void SaveVolume()
+    {
+        PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
+    }
+
+    public void LoadVolume()
+    {
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+    }
+
+    /*
+    #############################################
+    ------------------MAIN MENU------------------
+    #############################################
+    */
     private void Awake()
     {
         if (!PhotonNetwork.IsConnected)
@@ -59,6 +113,13 @@ public class MenuController : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
             
+    }
+
+    private void Start()
+    {
+        LoadName();
+        LoadVolume();
+        MusicManager.Instance.PlayMusic("MainMenu");
     }
 
     public override void OnConnectedToMaster()

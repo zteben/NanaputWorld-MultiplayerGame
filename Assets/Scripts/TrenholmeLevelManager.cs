@@ -6,6 +6,36 @@ using System;
 
 public class TrenholmeLevelManager : MonoBehaviourPunCallbacks
 {
+
+    public Transform bossSpawnPoint;
+    public string bossPrefabName;
+    private int enemiesRemaining;
+    private GameObject bossInstance;
+
+
+    void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(LevelFlow());
+    }
+
+    IEnumerator LevelFlow()
+    {
+        yield return new WaitForSeconds(2f);
+
+        yield return StartCoroutine(SpawnBoss());
+    }
+
+    IEnumerator SpawnBoss()
+    {
+        enemiesRemaining = 1;
+        bossInstance = PhotonNetwork.Instantiate(bossPrefabName, bossSpawnPoint.position, Quaternion.identity);
+        yield break;
+    }
+
+
+
+
     /*
     public string squirrelPrefabName;
     public Transform[] squirrelSpawnPoints;

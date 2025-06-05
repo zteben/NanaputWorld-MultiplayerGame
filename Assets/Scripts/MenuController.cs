@@ -49,14 +49,14 @@ public class MenuController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.NickName == nameInput.text) return;
 
-        if (nameInput.text.Length <= 10)
+        if (nameInput.text.Length <= 20)
         {
             PhotonNetwork.NickName = nameInput.text;
             Debug.Log("Player name changed.");
         }
         else
         {
-            Debug.Log("Player name must be less than or equal to 10 characters");
+            Debug.Log("Player name must be less than or equal to 20 characters");
         }
     }
 

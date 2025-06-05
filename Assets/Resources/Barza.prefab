@@ -472,8 +472,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1884679217
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3818782735207965359
 MonoBehaviour:
@@ -673,6 +673,9 @@ MonoBehaviour:
   healthBar: {fileID: 9197303106030335227}
   maxHealth: 1000
   currentHealth: 1000
+  attackableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!212 &1260112029389276888
 SpriteRenderer:
   m_ObjectHideFlags: 0

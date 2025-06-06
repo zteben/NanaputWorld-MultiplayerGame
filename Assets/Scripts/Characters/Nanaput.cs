@@ -80,7 +80,7 @@ public abstract class Nanaput : MonoBehaviour
         if (photonView.IsMine)
             healthBar.ChangeColor(new Color32(76, 217, 100, 255));
         else
-            healthBar.ChangeColor(new Color32(0, 114, 176, 255));
+            healthBar.ChangeColor(new Color32(102, 178, 255, 255));
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(maxHealth);
     }
@@ -202,7 +202,7 @@ public abstract class Nanaput : MonoBehaviour
         // Drop through platform
         else
         {
-            if (downPressed && downHoldTime > 0.4f)
+            if (downPressed && downHoldTime > 0.3f)
             {
                 Collider2D[] platforms = new Collider2D[5];
                 int hitCount = groundCheckCollider.OverlapCollider(dropFilter, platforms);

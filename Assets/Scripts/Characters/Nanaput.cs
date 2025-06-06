@@ -12,14 +12,13 @@ public abstract class Nanaput : MonoBehaviour
     public Animator anim;
     public Rigidbody2D rb;
     public GameObject cam;
-    private PolygonCollider2D boundCollider;
+    private CompositeCollider2D boundCollider;
 
     public CapsuleCollider2D groundCheckCollider;
     public LayerMask groundLayer;
 
     public float moveSpeed;
     public float jumpForce;
-    public float fallMultiplier;
     public float downForceMultiplier;
 
     public HealthBar healthBar;
@@ -64,9 +63,10 @@ public abstract class Nanaput : MonoBehaviour
             GameObject boundObject = GameObject.Find("CameraBound");
             if (boundObject != null)
             {
-                boundCollider = boundObject.GetComponent<PolygonCollider2D>();
+                boundCollider = boundObject.GetComponent<CompositeCollider2D>();
                 CinemachineConfiner2D confiner = cam.GetComponent<CinemachineConfiner2D>();
                 confiner.m_BoundingShape2D = boundCollider;
+                confiner.InvalidateCache();
             }
             else
             {
@@ -189,14 +189,11 @@ public abstract class Nanaput : MonoBehaviour
             {
                 if (rb.velocity.y > 0)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, -20f);
+                    rb.velocity = new Vector2(rb.velocity.x, -0.01f);
                 }
                 rb.velocity += Vector2.up * Physics2D.gravity.y * (downForceMultiplier - 1);
             }
-            else if (rb.velocity.y < 0)
-            {
-                rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1);
-            }
+
             downHoldTime = 0f;
         }
         // Drop through platform
